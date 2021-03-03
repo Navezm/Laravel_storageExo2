@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\ImageController;
+use App\Models\Animal;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +15,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function(){
+    $animal = Animal::all();
+    return view('welcome', compact('animal'));
 });
+
+Route::resource('animal', AnimalController::class);
+Route::resource('img', ImageController::class);
