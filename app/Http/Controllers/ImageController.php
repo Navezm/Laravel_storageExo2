@@ -25,7 +25,8 @@ class ImageController extends Controller
      */
     public function create()
     {
-        return view('pages.upload');
+        $img = Image::all();
+        return view('pages.upload', compact('img'));
     }
 
     /**
@@ -38,7 +39,8 @@ class ImageController extends Controller
     {
         Storage::put('public', $request->file('src'));
         $newEntry = new Image;
-        $newEntry->src = $request->src->hashName();
+        $newEntry->src = $request->file('src')->hashName();
+        $newEntry->save();
         return redirect()->back();
     }
 
@@ -82,8 +84,11 @@ class ImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Image $image)
+    public function destroy($id)
     {
-        //
+        $destroy = Image::find($id);
+        Storage::delete('public/'.$destroy->src);
+        $destroy->delete();
+        return redirect()->back();
     }
 }

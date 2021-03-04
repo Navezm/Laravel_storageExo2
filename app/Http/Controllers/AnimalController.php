@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Animal;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class AnimalController extends Controller
@@ -25,7 +26,8 @@ class AnimalController extends Controller
      */
     public function create()
     {
-        return view('pages.newAnimal');
+        $img = Image::all();
+        return view('pages.newAnimal', compact('img'));
     }
 
     /**
@@ -39,6 +41,7 @@ class AnimalController extends Controller
         $newEntry = new Animal;
         $newEntry->name = $request->name;
         $newEntry->src = $request->src;
+        $newEntry->save();
         return redirect()->back();
     }
 
