@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', function(){
-    $animal = Animal::all();
-    return view('welcome', compact('animal'));
+    $animals = Animal::all();
+    return view('welcome', compact('animals'));
 });
 
 Route::resource('animal', AnimalController::class);
